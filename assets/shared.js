@@ -1,6 +1,10 @@
 const root = document.documentElement;
 const savedTheme = localStorage.getItem("tempest-theme");
 
+if (location.hostname === "tempest07-news-feed.pages.dev") {
+  location.replace(`https://tempest07-gateway.weiqian-yu.workers.dev/news-feed/${location.search}${location.hash}`);
+}
+
 if (savedTheme) {
   root.dataset.theme = savedTheme;
 }
