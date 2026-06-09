@@ -8,6 +8,8 @@
 https://tempest-news-api.weiqian-yu.workers.dev
 ```
 
+当前页中的英文新闻会自动翻译标题和摘要第一句，并在中文标题下保留英文原题。
+
 ## Cloudflare Pages 设置
 
 | 设置 | 内容 |

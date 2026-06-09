@@ -16,6 +16,8 @@ const state = {
   savedIds: new Set(readJson(STORAGE.saved, [])),
   sources: [],
   items: [],
+  translations: {},
+  translationRequests: new Set(),
   page: 1,
   pageSize: Number(localStorage.getItem(STORAGE.pageSize)) || 20,
 };
@@ -255,14 +257,18 @@ function renderFeed() {
   elements.feedList.innerHTML = visible.map((item) => {
     const isRead = state.readIds.has(item.id);
     const isSaved = state.savedIds.has(item.id);
+    const translation = state.translations[item.id];
+    const displayTitle = translation?.titleZh || item.title;
+    const displayDescription = translation?.descriptionZh || item.description;
     return `
       <article class="news-item ${isRead ? "" : "unread"}">
         <div class="news-meta">
           <span class="source-pill">${escapeHtml(item.sourceName)}</span>
           <time>${formatDate(item.publishedAt)}</time>
         </div>
-        <h2><a href="${escapeAttribute(item.url)}" target="_blank" rel="noopener noreferrer" data-open-item="${escapeAttribute(item.id)}">${highlight(item.title)}</a></h2>
-        ${item.description ? `<p>${highlight(item.description)}</p>` : ""}
+        <h2><a href="${escapeAttribute(item.url)}" target="_blank" rel="noopener noreferrer" data-open-item="${escapeAttribute(item.id)}">${highlight(displayTitle)}</a></h2>
+        ${translation ? `<div class="news-original">${escapeHtml(item.title)}</div>` : ""}
+        ${displayDescription ? `<p>${highlight(displayDescription)}</p>` : ""}
         <div class="news-actions">
           <button class="tiny-button ${isRead ? "active" : ""}" data-toggle-read="${escapeAttribute(item.id)}">${isRead ? "已读" : "标为已读"}</button>
           <button class="tiny-button ${isSaved ? "active" : ""}" data-toggle-saved="${escapeAttribute(item.id)}">${isSaved ? "已收藏" : "收藏"}</button>
@@ -284,6 +290,30 @@ function renderFeed() {
   elements.feedList.querySelectorAll("[data-toggle-saved]").forEach((button) => {
     button.addEventListener("click", () => toggleSet(state.savedIds, button.dataset.toggleSaved));
   });
+  translateVisibleItems(visible);
+}
+
+async function translateVisibleItems(items) {
+  const ids = items
+    .filter((item) => !state.translations[item.id] && !state.translationRequests.has(item.id))
+    .map((item) => item.id);
+  if (!ids.length || !state.apiBase) return;
+
+  ids.forEach((id) => state.translationRequests.add(id));
+  try {
+    const response = await fetch(`${state.apiBase}/api/translations`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ids }),
+    });
+    if (!response.ok) throw new Error(`Translation API returned ${response.status}`);
+    const data = await response.json();
+    Object.assign(state.translations, data.translations || {});
+    if (Object.keys(data.translations || {}).length) renderFeed();
+  } catch (error) {
+    ids.forEach((id) => state.translationRequests.delete(id));
+    console.warn("Translation unavailable:", error);
+  }
 }
 
 function toggleSet(set, id) {
