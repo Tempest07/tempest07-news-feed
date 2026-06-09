@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f5">
+  <title>News Feed - Tempest07</title>
+  <meta name="description" content="Tempest07 personal news feed">
+  <link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="https://tempest07-gateway.weiqian-yu.workers.dev/">
+        <span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13h7L11 22l8.5-11h-7z"/></svg></span>
+        <span>Tempest07</span><small>LAB</small>
+      </a>
+      <nav>
+        <div class="nav-label">Workspace</div>
+        <a class="nav-link" href="https://tempest07-gateway.weiqian-yu.workers.dev/">Overview</a>
+        <a class="nav-link active" href="/"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>News Feed</a>
+        <div class="nav-label">Quick access</div>
+        <a class="nav-link" href="https://tempest07-gateway.weiqian-yu.workers.dev/trade-converter/">Trade Converter</a>
+        <a class="nav-link" href="https://tempest07-gateway.weiqian-yu.workers.dev/trade-recorder/">Trade Recorder</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="system-card">
+          <div class="system-top"><span>News API</span><span class="online" id="sideApiStatus">Setup needed</span></div>
+          <p id="sideApiDetail">Open settings to connect your Worker.</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <span class="crumb">Workspace&nbsp; / &nbsp;<strong>News Feed</strong></span>
+        <div class="top-actions">
+          <button class="icon-button" id="openSettings" title="News Feed 设置" aria-label="News Feed 设置"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1z"/></svg></button>
+          <button class="icon-button" data-theme-toggle title="切换主题" aria-label="切换主题"><svg viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/><circle cx="12" cy="12" r="4"/></svg></button>
+          <span class="avatar">T7</span>
+        </div>
+      </header>
+
+      <div class="content wide">
+        <section class="welcome">
+          <div>
+            <p class="kicker">Signal over noise</p>
+            <h1>News Feed</h1>
+            <p>聚合你真正关注的来源。用来源、关键词、时间范围和阅读状态收窄信息流。</p>
+          </div>
+          <span class="date" data-today></span>
+        </section>
+
+        <div class="feed-toolbar">
+          <label class="search-wrap">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+            <input class="search-input" id="searchInput" type="search" placeholder="搜索标题和摘要..." autocomplete="off">
+          </label>
+          <button class="button" id="refreshButton"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0 2 5"/><path d="M20 4v7h-7"/></svg><span>刷新</span></button>
+          <button class="button" id="markPageRead">本页标为已读</button>
+        </div>
+
+        <div class="feed-layout">
+          <aside class="filters">
+            <div class="filter-block">
+              <div class="filter-title"><span>来源</span><button id="toggleSources">全选 / 清空</button></div>
+              <div class="check-list" id="sourceFilters"><span class="check-row">等待连接 Worker...</span></div>
+            </div>
+            <div class="filter-block">
+              <div class="filter-title"><span>关键词</span><button id="clearKeywords">清空</button></div>
+              <div class="keyword-entry">
+                <input class="field-input" id="keywordInput" placeholder="例如 BTC">
+                <button class="tiny-button" id="addKeyword">添加</button>
+              </div>
+              <div class="keyword-tags" id="keywordTags"></div>
+            </div>
+            <div class="filter-block">
+              <div class="filter-title"><span>时间范围</span></div>
+              <select class="field-select" id="timeRange">
+                <option value="0">不限</option>
+                <option value="24">最近 24 小时</option>
+                <option value="72">最近 3 天</option>
+                <option value="168">最近 7 天</option>
+                <option value="720">最近 30 天</option>
+              </select>
+            </div>
+            <div class="filter-block">
+              <div class="filter-title"><span>阅读状态</span></div>
+              <select class="field-select" id="readFilter">
+                <option value="all">全部</option>
+                <option value="unread">仅未读</option>
+                <option value="read">仅已读</option>
+                <option value="saved">仅收藏</option>
+              </select>
+            </div>
+          </aside>
+
+          <section>
+            <div class="filter-summary">
+              <span id="resultSummary">尚未加载新闻</span>
+              <span class="feed-status"><i class="status-dot"></i><span id="updateTime">等待连接</span></span>
+            </div>
+            <div class="feed-list" id="feedList">
+              <div class="empty-state">请点击右上角设置按钮，填写部署后的 Worker 地址。</div>
+            </div>
+            <div class="pagination" id="pagination" hidden>
+              <button class="tiny-button" id="previousPage">上一页</button>
+              <span id="pageSummary"></span>
+              <button class="tiny-button" id="nextPage">下一页</button>
+            </div>
+          </section>
+        </div>
+
+        <footer><span>Tempest07 News Feed</span><span>RSS aggregated by Cloudflare Workers</span></footer>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="settingsModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <h2 id="settingsTitle">连接 News Worker</h2>
+      <p>填写部署 Worker 后得到的地址。设置只保存在当前浏览器，不会发送给其他服务。</p>
+      <label class="field-label" for="apiBaseInput">Worker 地址</label>
+      <input class="field-input" id="apiBaseInput" placeholder="https://tempest-news-api.your-name.workers.dev">
+      <div class="setup-note">不要在末尾填写 <code>/api/news</code>。示例地址应以 <code>workers.dev</code> 或你的自定义域名结尾。</div>
+      <label class="field-label" for="pageSizeInput">每页新闻数量</label>
+      <select class="field-select" id="pageSizeInput">
+        <option value="10">10 条</option>
+        <option value="20">20 条</option>
+        <option value="30">30 条</option>
+      </select>
+      <div class="modal-actions">
+        <button class="button" id="closeSettings">取消</button>
+        <button class="button primary" id="saveSettings">保存并连接</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/config.js"></script>
+  <script src="/assets/shared.js"></script>
+  <script src="/assets/news-feed.js"></script>
+</body>
+</html>
