@@ -19,7 +19,7 @@ const state = {
   translations: {},
   translationRequests: new Set(),
   page: 1,
-  pageSize: Number(localStorage.getItem(STORAGE.pageSize)) || 20,
+  pageSize: normalizePageSize(localStorage.getItem(STORAGE.pageSize)),
 };
 
 const elements = {
@@ -59,6 +59,12 @@ function normalizeApiBase(value) {
   return value.trim().replace(/\/+$/, "").replace(/\/api\/news$/, "");
 }
 
+function normalizePageSize(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return 20;
+  return Math.min(Math.max(Math.trunc(number), 1), 100);
+}
+
 function openSettings() {
   elements.apiBaseInput.value = state.apiBase;
   elements.pageSizeInput.value = String(state.pageSize);
@@ -77,7 +83,7 @@ elements.settingsModal.addEventListener("click", (event) => {
 });
 document.querySelector("#saveSettings").addEventListener("click", () => {
   state.apiBase = normalizeApiBase(elements.apiBaseInput.value);
-  state.pageSize = Number(elements.pageSizeInput.value);
+  state.pageSize = normalizePageSize(elements.pageSizeInput.value);
   localStorage.setItem(STORAGE.apiBase, state.apiBase);
   localStorage.setItem(STORAGE.pageSize, String(state.pageSize));
   closeSettings();
