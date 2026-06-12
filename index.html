@@ -4,24 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f7f5">
-  <title>News Feed - Tempest07</title>
-  <meta name="description" content="Tempest07 personal news feed">
+  <title>Newsfeed - Tempest07</title>
+  <meta name="description" content="Tempest07 personal newsfeed">
   <link rel="stylesheet" href="./assets/app.css">
 </head>
 <body>
   <div class="layout">
     <aside class="sidebar">
-      <a class="brand" href="https://tempest07-gateway.weiqian-yu.workers.dev/">
+      <a class="brand" href="https://tempest07.com/gateway/">
         <span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M13 2 4.5 13h7L11 22l8.5-11h-7z"/></svg></span>
         <span>Tempest07</span><small>LAB</small>
       </a>
       <nav>
         <div class="nav-label">Workspace</div>
-        <a class="nav-link" href="https://tempest07-gateway.weiqian-yu.workers.dev/">Overview</a>
-        <a class="nav-link active" href="./"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>News Feed</a>
+        <a class="nav-link" href="https://tempest07.com/gateway/">Gateway</a>
+        <a class="nav-link active" href="./"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Newsfeed</a>
         <div class="nav-label">Quick access</div>
-        <a class="nav-link" href="https://tempest07-gateway.weiqian-yu.workers.dev/trade-converter/">Trade Converter</a>
-        <a class="nav-link" href="https://tempest07-gateway.weiqian-yu.workers.dev/trade-recorder/">Trade Recorder</a>
+        <a class="nav-link" href="https://tempest07.com/trade-excel-writer/">Trade Excel Writer</a>
+        <a class="nav-link" href="https://tempest07.com/trade-record/">Trade Record</a>
+        <a class="nav-link" href="https://tempest07.com/bond-centre/">Bond Centre</a>
       </nav>
       <div class="sidebar-bottom">
         <div class="system-card">
@@ -33,9 +34,9 @@
 
     <main class="main">
       <header class="topbar">
-        <span class="crumb">Workspace&nbsp; / &nbsp;<strong>News Feed</strong></span>
+        <span class="crumb">Workspace&nbsp; / &nbsp;<strong>Newsfeed</strong></span>
         <div class="top-actions">
-          <button class="icon-button" id="openSettings" title="News Feed 设置" aria-label="News Feed 设置"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1z"/></svg></button>
+          <button class="icon-button" id="openSettings" title="Newsfeed 设置" aria-label="Newsfeed 设置"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1z"/></svg></button>
           <button class="icon-button" data-theme-toggle title="切换主题" aria-label="切换主题"><svg viewBox="0 0 24 24"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/><circle cx="12" cy="12" r="4"/></svg></button>
           <span class="avatar">T7</span>
         </div>
@@ -45,7 +46,7 @@
         <section class="welcome">
           <div>
             <p class="kicker">Signal over noise</p>
-            <h1>News Feed</h1>
+            <h1>Newsfeed</h1>
             <p>聚合你真正关注的来源。用来源、关键词、时间范围和阅读状态收窄信息流。</p>
           </div>
           <span class="date" data-today></span>
@@ -111,7 +112,7 @@
           </section>
         </div>
 
-        <footer><span>Tempest07 News Feed</span><span>RSS aggregated by Cloudflare Workers</span></footer>
+        <footer><span>Tempest07 Newsfeed</span><span>RSS aggregated by Cloudflare Workers</span></footer>
       </div>
     </main>
   </div>

@@ -1,6 +1,6 @@
-# Tempest07 News Feed
+# Tempest07 Newsfeed
 
-这是独立 News Feed 前端仓库，只包含静态网页。
+这是独立 Newsfeed 前端仓库，只包含静态网页。
 
 它使用已经部署的新闻 API：
 
